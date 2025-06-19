@@ -14,7 +14,9 @@ def read_authors(db: SessionLocal, skip: int | None, limit: int | None):
 
 
 def retrieve_author(db: SessionLocal, author_id: int):
-    author = db.query(DB_Author).filter(DB_Author.id == author_id)
+    author = db.query(DB_Author).filter(DB_Author.id == author_id).first()
+    if author is None:
+        raise HTTPException(status_code=400, detail="Author with given ID not exists")
     return author
 
 
@@ -60,7 +62,9 @@ def read_books(db: SessionLocal, skip: int | None, limit: int | None):
 
 
 def retrieve_book(db: SessionLocal, book_id: int):
-    book = db.query(DB_Book).filter(DB_Book.id == book_id)
+    book = db.query(DB_Book).filter(DB_Book.id == book_id).first()
+    if book is None:
+        raise HTTPException(status_code=400, detail="Book with given ID not exists")
     return book
 
 
@@ -94,7 +98,7 @@ def update_book(db: SessionLocal, book_id: int, book_data: BookUpdate):
     if book_data.title:
         book.title = book_data.title
     if book_data.summary:
-        book_data.summary = book_data.summary
+        book.data.summary = book_data.summary
     if book_data.publication_date:
         book.publication_date = book_data.publication_date
     if book_data.author_id:

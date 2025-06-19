@@ -20,17 +20,17 @@ def detail_author(author_id: int, db: SessionLocal = Depends(get_db)):
     return retrieve_author(db, author_id=author_id)
 
 
-@app.post("/authors/{author_id}/", status_code=204)
+@app.delete("/authors/{author_id}/", status_code=204)
 def remove_author(author_id: int, db: SessionLocal = Depends(get_db)):
     return delete_author(db, author_id=author_id)
 
 
-@app.post("/author/", response_model=AuthorRead)
+@app.post("/authors/", response_model=AuthorRead)
 def add_author(author: AuthorCreate, db: SessionLocal = Depends(get_db)):
     return create_author(db, author_data=author)
 
 
-@app.post("/author/{author_id}/", response_model=AuthorRead)
+@app.patch("/authors/{author_id}/", response_model=AuthorRead)
 def refresh_author(author: AuthorUpdate, author_id: int, db: SessionLocal = Depends(get_db)):
     return update_author(db, author_data=author, author_id=author_id)
 
@@ -40,21 +40,21 @@ def list_books(skip: int = None, limit: int = None, db: SessionLocal = Depends(g
     return read_books(db, skip, limit)
 
 
-@app.get("/book/{book_id}/", response_model=BookRead)
+@app.get("/books/{book_id}/", response_model=BookRead)
 def detail_book(book_id: int, db: SessionLocal = Depends(get_db)):
     return retrieve_book(db, book_id=book_id)
 
 
-@app.post("/book/{book_id}/", status_code=204)
+@app.delete("/books/{book_id}/", status_code=204)
 def remove_book(book_id: int, db: SessionLocal = Depends(get_db)):
     return delete_book(db, book_id=book_id)
 
 
-@app.post("/book/", response_model=BookRead)
+@app.post("/books/", response_model=BookRead)
 def add_book(book: BookCreate, db: SessionLocal = Depends(get_db)):
     return create_book(db, book_data=book)
 
 
-@app.post("/author/{author_id}/", response_model=BookRead)
+@app.patch("/books/{book_id}/", response_model=BookRead)
 def refresh_book(book: BookUpdate, book_id: int, db: SessionLocal = Depends(get_db)):
     return update_book(db, book_data=book, book_id=book_id)

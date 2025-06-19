@@ -37,7 +37,7 @@ class BookCreate(BookBase):
     author_id: int
 
 
-class BookUpdate(BookBase):
+class BookUpdate(BaseModel):
     title: Optional[str] = None
     summary: Optional[str] = None
     publication_date: Optional[date] = None
